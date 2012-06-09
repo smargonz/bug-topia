@@ -1,6 +1,15 @@
 #!/bin/bash
 
-fileName=test4.txt
+IFS='
+'
+array=(`ls -1`)
+
+len=${#array[*]}
+i=0
+while [ $i -lt $len ]
+do
+
+fileName=${array[$i]}
 
 # most recent modified time
 currModTime=`stat -f %m $fileName`
@@ -38,5 +47,8 @@ else
 
    # create logfile
    echo "CREATING MODLOG"
-   echo "$fileName $STR 0">>modLogFile.txt 
+   echo "$fileName $currModTime 0">>modLogFile.txt 
 fi
+
+let i++
+done
